@@ -1,0 +1,56 @@
+from __future__ import absolute_import, division, print_function
+
+from modelClass import kerasMovieModel as itm
+
+import tensorflow as tf
+from tensorflow import keras
+
+import numpy as np
+
+import matplotlib as mpl
+mpl.use('TkAgg')
+
+import matplotlib.pyplot as plt
+
+
+NUM_WORDS = 10000
+imdb = keras.datasets.imdb
+(train_data, train_labels), (test_data, test_labels) = imdb.load_data(num_words=NUM_WORDS)
+raw_data = test_data
+
+newItm = itm(imdb=False, loadData=False)
+# instanceVars = vars(newItm)
+# print(instanceVars["word_index"])
+# test = np.array([test_data[23]])
+# test = newItm.alterData(test)
+# print(newItm.decodeReview(raw_data[23])," Prediction: ",newItm.predictValue(test))
+
+#TODO: Move to ModelClass or create a new class for data preprocessing
+# word2index = keras.datasets.imdb.get_word_index()
+# word2index = {k:(v+3) for k,v in word2index.items()} 
+# word2index["<PAD>"] = 0
+# word2index["<START>"] = 1
+# word2index["<UNK>"] = 2  # unknown
+# word2index["<UNUSED>"] = 3
+
+# def detectRandomText(text):
+#     text = keras.preprocessing.text.text_to_word_sequence(text)
+#     test=[]
+#     for word in text:
+#         test.append(word2index[word])
+#     test_raw = test
+#     test = np.array([test])
+#     test=newItm.alterData(test)
+#     print(newItm.decodeReview(test_raw)," Prediction: ",newItm.predictValue(test))
+# newItm.preprocessText()
+# test_text = "loved it, an amazing movie, would recommend to others"
+# detectRandomText(test_text)
+# test_text = "hated it, worst movie ever"
+
+
+test_raw = "loved it, an amazing movie, would recommend to others"
+test_text = newItm.preprocessText(test_raw)
+print(test_raw," Prediction: ",newItm.predictValue(test_text))
+test_raw = "hated it, worst movie ever"
+test_text = newItm.preprocessText(test_raw)
+print(test_raw," Prediction: ",newItm.predictValue(test_text))
