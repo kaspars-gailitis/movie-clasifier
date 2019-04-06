@@ -11,7 +11,7 @@ class ModelController extends Controller
     {
         $command = escapeshellcmd("/Users/kasparsg/.virtualenvs/env3.6/bin/python ". app_path("/Http/Controllers/TensorflowModel/Python/predictData.py"));
         $report = exec($command, $output, $status);
-        print_r($report);
+        echo implode("\n", $output);
     }
 
     public function initialTrain()
