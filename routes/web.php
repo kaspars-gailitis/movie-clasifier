@@ -18,4 +18,4 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/test', 'TensorflowModel\ModelController@test');
+Route::get('/test', 'TensorflowModel\ModelController@evaluateReview');

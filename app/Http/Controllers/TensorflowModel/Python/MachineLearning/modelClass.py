@@ -43,7 +43,7 @@ class kerasMovieModel:
                                         batch_size=512,
                                         validation_data=(self.test_data, self.test_labels),
                                         verbose=2)
-        self.model.save("app/Http/Controllers/TensorflowModel/Python/tf_keras_model_2.h5")
+        self.model.save("../app/Http/Controllers/TensorflowModel/Python/MachineLearning/tf_keras_model_2.h5")
     def _multiHotSequences(self, sequences, dimension):
         # Create an all-zero matrix of shape (len(sequences), dimension)
         results = np.zeros((len(sequences), dimension))
@@ -88,7 +88,7 @@ class kerasMovieModel:
         return ' '.join([self.reverse_word_index.get(i, '?') for i in text])
 
     def _loadModel(self):
-        return keras.models.load_model('app/Http/Controllers/TensorflowModel/Python/tf_keras_model_2.h5')
+        return keras.models.load_model('../app/Http/Controllers/TensorflowModel/Python/MachineLearning/tf_keras_model_2.h5')
     
     def predictValue(self, text):
        return self.model.predict(text)
