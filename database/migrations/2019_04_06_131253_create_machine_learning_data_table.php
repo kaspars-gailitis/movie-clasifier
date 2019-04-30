@@ -13,7 +13,7 @@ class CreateMachineLearningDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('machine_learning_data', function (Blueprint $table) {
+        Schema::create('movie_review_history', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('review_id')->unsigned();
             $table->foreign('review_id')->references('id')->on('reviews');

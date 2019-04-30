@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Movies extends Model
 {
     public function machineLearningData(){
-        return $this->hasMany('App\MachineLearningData');
+        return $this->hasMany('App\MovieReviewHistory');
     }
 }

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MachineLearningData extends Model
+class MovieReviewHistory extends Model
 {
     public function review(){
         return $this->belongsTo('App\Review');

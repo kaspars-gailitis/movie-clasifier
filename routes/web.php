@@ -17,5 +17,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home/{pageNumber}', 'MovieController@index')->name('home');
+Route::get('/show/{id}', 'MovieController@show');
 Route::get('/test', 'TensorflowModel\ModelController@evaluateReview');

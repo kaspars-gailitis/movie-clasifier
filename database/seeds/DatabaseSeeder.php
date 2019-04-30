@@ -19,5 +19,8 @@ class DatabaseSeeder extends Seeder
         DB::table('user_groups')->insert([
             'group_name' => 'administrator',
         ]);
+        DB::table('user_groups')->insert([
+            'group_name' => 'blocked user',
+        ]);
     }
 }

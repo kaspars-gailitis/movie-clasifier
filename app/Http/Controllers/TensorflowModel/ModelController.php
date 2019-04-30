@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 class ModelController extends Controller
 {
     const PYTHON_PATH = "/Users/kasparsg/.virtualenvs/env3.6/bin/python";
+    //TODO: Add gettign the review value
     public function evaluateReview()
     {
         $command = escapeshellcmd(ModelController::PYTHON_PATH." ". app_path("/Http/Controllers/TensorflowModel/Python/Main.py"));
