@@ -17,6 +17,25 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home/{pageNumber}', 'MovieController@index')->name('home');
-Route::get('/show/{id}', 'MovieController@show');
 Route::get('/test', 'TensorflowModel\ModelController@evaluateReview');
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/movies/list/{pageNumber?}', 'MovieController@index')->name('movies.list');
+Route::get('/movie/{id}', 'MovieController@show');
+
+Route::get('/reviews/list/{pageNumber?}', 'ReviewController@showList')->name('reviews.list');
+Route::get('/reviews/show/{id}', 'ReviewController@showReview');
+Route::get('/reviews/edit/{id?}', 'ReviewController@editReview')->middleware('auth')->name('reviews.edit');
+Route::post('/review/store', 'ReviewController@store')->middleware('auth');
+
+Route::get('/admin', 'AdminController@index')->middleware('auth');
+
+Route::get('/reviews/my/list', 'ReviewController@listMyReviews')->middleware('auth')->name('reviews.user');
+
+Route::get('/search', 'MovieController@search');
+
+Route::get('/searchLanding', function () {
+    return view('search_movie');
+})->name('search');
+//Route::get('/search','SearchController@search');

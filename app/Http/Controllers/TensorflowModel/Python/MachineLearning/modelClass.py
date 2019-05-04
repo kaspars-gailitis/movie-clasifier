@@ -79,7 +79,11 @@ class kerasMovieModel:
         text = keras.preprocessing.text.text_to_word_sequence(text)
         processed=[]
         for word in text:
-            processed.append(self.word_index[word])
+            if word in self.word_index:
+                if (self.word_index[word] < self.NUM_WORDS):
+                    processed.append(self.word_index[word])
+            else: 
+                processed.append(self.word_index["<UNK>"])
         processed = np.array([processed])
         processed=self._alterData(processed)
         return processed

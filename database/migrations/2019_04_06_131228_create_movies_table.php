@@ -17,7 +17,7 @@ class CreateMoviesTable extends Migration
             $table->bigIncrements('id');
             $table->text('omdb_id');
             $table->text('name');
-            $table->boolean('rating');
+            $table->decimal('rating', 11, 10);
             $table->timestamps();
         });
     }

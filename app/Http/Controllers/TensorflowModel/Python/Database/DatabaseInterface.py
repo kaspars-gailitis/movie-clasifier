@@ -42,9 +42,9 @@ class DatabaseInstance:
     def updateDatabase(self, rawReviewRating, reviewId):
         review = self.getReviewById(reviewId)
         review.raw_rating = rawReviewRating
-        if (rawReviewRating > 0.6):
+        if (rawReviewRating > 0.65):
             review.final_rating = 1
-        elif (rawReviewRating < 0.5):
+        elif (rawReviewRating < 0.45):
             review.final_rating = 0
         else:
             review.final_rating = -1
