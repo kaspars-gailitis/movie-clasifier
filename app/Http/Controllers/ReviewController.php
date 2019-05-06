@@ -19,13 +19,13 @@ class ReviewController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function showList($pageNumber = 0) {
-        $reviews = Review::where('id', '>', (10*$pageNumber-1))->take(50)->get();
+        $reviews = Review::where('id', '>', (10*$pageNumber-1))->take(50)->orderBy('updated_at', 'DESC')->get();
         return view('list_reviews', [
             'reviews' => $reviews
         ]);
     }
     public function listMyReviews() {
-        $reviews = Review::where('user_id', Auth::user()->id)->take(50)->get();
+        $reviews = Review::where('user_id', Auth::user()->id)->orderBy('updated_at', 'DESC')->get();
         return view('list_reviews', [
             'reviews' => $reviews
         ]);
@@ -39,7 +39,7 @@ class ReviewController extends Controller
                 'review' => $review,
             ]);
         }
-        return redirect('home');
+        return redirect('/');
     }
 
     public function store(Request $request) {
@@ -52,7 +52,7 @@ class ReviewController extends Controller
                 ->withInput()
                 ->withErrors($validator);
         }
-        $review = new Review();
+        $review = $request->update ? Review::findOrFail($request->review_id) : new Review();
         $review->review_text = $request->body;
         $review->movie_id = $request->movie;
         $review->user_id = Auth::user()->id;
@@ -62,6 +62,40 @@ class ReviewController extends Controller
 
         $command = escapeshellcmd(ReviewController::PYTHON_PATH." ". app_path("/Http/Controllers/TensorflowModel/Python/Main.py $review->id"));
         exec($command, $output, $status);
-        return redirect()->back();
+        $this->updateMovieRating($review->movie_id);
+
+        if($request->update) return redirect()->route('reviews.user')->with('status', 'Review Updated');
+        return redirect()->back()->with('status', 'Review Added');
     }
+
+    public function updateBulk() {
+        $reviews = Review::get();
+        foreach($reviews as $review) {
+            $this->updateMovieRating($review->movie_id);
+        }
+    }
+
+    private function updateMovieRating(int $id) {
+        $movie = Movies::findOrFail($id);
+        $reviews = Review::where('movie_id', $id)->get();
+        $totalReviews = 0.0;
+        $positiveReviews = 0.0;
+        foreach($reviews as $review) {
+            if($review->final_rating == 1) {
+                $positiveReviews++;
+                $totalReviews++;
+            }
+            if($review->final_rating == 0) $totalReviews++;
+        }
+        $movie->rating = $totalReviews > 0 ? $positiveReviews/$totalReviews : 0;
+        $movie->save();
+    }
+
+    public function deleteReview(Request $request) {
+        $review = Review::findOrFail($request->review);
+        if($request->user_id == Auth::user()->id && $request->user_id == $review->user_id) {
+            $review->delete();
+        }
+        return redirect()->back()->with('status', 'Review Deleted');
+    } 
 }

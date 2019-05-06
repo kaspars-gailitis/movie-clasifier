@@ -7,6 +7,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">{{ $movie->Title}}, {{$movie->Year}}</h4>
+                        <h5 class="card-text">@lang('Movie Rating'): {{ round($rating * 100 ).'%' }}</h5>
+                        <br>
                         <p class="card-text">{{ $movie->Plot }}</p>
                         <p class="card-text">@lang('Genre'): {{ $movie->Genre}}</p>
                         <p class="card-text">@lang('Director'): {{ $movie->Director}}</p>

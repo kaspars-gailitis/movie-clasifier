@@ -14,6 +14,25 @@
                 </b>
             </p>
             <p>@lang('Added'): {{ $review->formatTime() }}</p>
+            {!! Form::open(array('url' => '/evaluate', 'method' => 'post')) !!}
+                {{ csrf_field() }}
+                {{ Form::hidden('review', isset($review) ? $review->id : NULL, array('class' => 'form-control')) }}
+                {{ Form::hidden('initial_rating', isset($review) ? $review->raw_rating : NULL, array('class' => 'form-control')) }}
+                {!! Form::button('Accurate Prediction', array('class' => 'form-control buttons', 'type'=>'submit', 'value'=> '1', 'name' => 'user_rating')) !!}
+                {!! Form::button('Inaccurate Prediction', array('class' => 'form-control buttons', 'type'=>'submit', 'value'=> '0', 'name' => 'user_rating')) !!}
+            {!! Form::close() !!}
+            @if(Auth::user())
+                @if($review->user_id == Auth::user()->id)
+                    <button onclick="window.location.href='{!! route('reviews.edit', $review->id)  !!}';" class="form-control buttons" style="margin-top: 10px;">
+                        <i class="fa fa-plus"></i> @lang('Edit Review')
+                    </button>
+                    {!! Form::open(array('url' => '/reviews/delete', 'method' => 'delete', 'class'=>'delete')) !!}
+                        {{ Form::hidden('review', isset($review) ? $review->id : NULL, array('class' => 'form-control')) }}
+                        {{ Form::hidden('user_id', isset($review) ? Auth::user()->id : NULL, array('class' => 'form-control')) }}
+                        {!! Form::button('Delete', array('class' => 'form-control', 'type'=>'submit', 'name' => 'submit')) !!}
+                    {!! Form::close() !!}
+                @endif
+            @endif
         </div>
     </div>
 </div>

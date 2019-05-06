@@ -87,7 +87,7 @@
                 <div class="links">
                     <a href="{{ route('search') }}">Search Movies</a>
                     <a href="{{ route('reviews.list') }}">Review List</a>
-                    <a href="{{ route('reviews.edit') }}">New Review</a>
+                    <a href="{{ route('reviews.user') }}">My Reviews</a>
                 </div>
             </div>
         </div>

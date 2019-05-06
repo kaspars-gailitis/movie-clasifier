@@ -27,13 +27,18 @@ Route::get('/movie/{id}', 'MovieController@show');
 Route::get('/reviews/list/{pageNumber?}', 'ReviewController@showList')->name('reviews.list');
 Route::get('/reviews/show/{id}', 'ReviewController@showReview');
 Route::get('/reviews/edit/{id?}', 'ReviewController@editReview')->middleware('auth')->name('reviews.edit');
+Route::delete('/reviews/delete', 'ReviewController@deleteReview')->middleware('auth')->name('reviews.delete');
 Route::post('/review/store', 'ReviewController@store')->middleware('auth');
+
+Route::post('/evaluate', 'EvaluationController@evaluate')->middleware('auth');
 
 Route::get('/admin', 'AdminController@index')->middleware('auth');
 
 Route::get('/reviews/my/list', 'ReviewController@listMyReviews')->middleware('auth')->name('reviews.user');
 
 Route::get('/search', 'MovieController@search');
+
+Route::get('/update/rating', 'ReviewController@updateBulk');
 
 Route::get('/searchLanding', function () {
     return view('search_movie');

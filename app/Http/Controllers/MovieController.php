@@ -21,7 +21,7 @@ class MovieController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($pageNumber = 0) {
+    public function index(int $pageNumber = 0) {
         $movies = Movies::where('id', '>', (10*$pageNumber-1))->take(50)->get();
         return view('list_movies', [
             'movies' => $movies
@@ -43,21 +43,23 @@ class MovieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show(int $id) {
         $movie = Movies::findOrFail($id);
-        $review = Review::where('movie_id', $id)->get();
+        $reviews = Review::where('movie_id', $id)->orderBy('updated_at', 'DESC')->get();
         $id = $movie->id;
+        $rating = $movie->rating;
         $movie = $this->apiRequest($movie->omdb_id);
         return view('show_movie', [
             'id' => $id,
+            'rating' => $rating,
             'movie' => $movie,
-            'reviews' => $review
+            'reviews' => $reviews
         ]);
     }
 
     public function search(Request $request) {
         $text = $request->input('text');
-        $movies = Movies::where('name', 'Like', '%'.$text.'%')->get();
+        $movies = Movies::where('name', 'Like', '%'.$text.'%')->orderBy('rating', 'DESC')->get();
 
         $viewRendered = view('components.movie_list', ['movies' => $movies])->render();
         return response()->json(["html" => $viewRendered]);
