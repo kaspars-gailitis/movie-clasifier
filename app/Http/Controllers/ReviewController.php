@@ -75,7 +75,7 @@ class ReviewController extends Controller
         }
     }
 
-    private function updateMovieRating(int $id) {
+    public function updateMovieRating(int $id) {
         $movie = Movies::findOrFail($id);
         $reviews = Review::where('movie_id', $id)->get();
         $totalReviews = 0.0;
