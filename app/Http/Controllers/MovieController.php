@@ -49,12 +49,13 @@ class MovieController extends Controller
         $id = $movie->id;
         $rating = $movie->rating;
         $movie = $this->apiRequest($movie->omdb_id);
-        return view('show_movie', [
-            'id' => $id,
-            'rating' => $rating,
-            'movie' => $movie,
-            'reviews' => $reviews
-        ]);
+        return $movie->Response === "True" ?  
+            view('show_movie', [
+                'id' => $id,
+                'rating' => $rating,
+                'movie' => $movie,
+                'reviews' => $reviews
+            ]) : redirect()->back()->withErrors('API Request error: '.$movie->Error);
     }
 
     public function search(Request $request) {

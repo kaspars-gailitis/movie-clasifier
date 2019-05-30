@@ -56,7 +56,7 @@
                                 </li>
                             @endif
                         @else   
-                            @if(Auth::user()->isAdmin())
+                            @if(Auth::user() && Auth::user()->isAdmin())
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('admin.dashboard') }}">{{ __('Admin Dashboard') }}</a>
                                 </li>

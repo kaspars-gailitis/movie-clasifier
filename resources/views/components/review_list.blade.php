@@ -21,7 +21,7 @@
                 {!! Form::button('Accurate Prediction', array('class' => 'form-control buttons', 'type'=>'submit', 'value'=> '1', 'name' => 'user_rating')) !!}
                 {!! Form::button('Inaccurate Prediction', array('class' => 'form-control buttons', 'type'=>'submit', 'value'=> '0', 'name' => 'user_rating')) !!}
             {!! Form::close() !!}
-            @if(Auth::user()->isAdmin())
+            @if(Auth::user() && Auth::user()->isAdmin())
                 {!! Form::open(array('url' => '/admin/reviews/update', 'method' => 'post', 'class' => 'admin-form')) !!}
                     {{ Form::hidden('review', isset($review) ? $review->id : NULL, array('class' => 'form-control')) }}
                     {{ Form::hidden('movie', isset($review) ? $review->movie->id : NULL, array('class' => 'form-control')) }}

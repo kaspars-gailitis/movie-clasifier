@@ -85,6 +85,9 @@
                 </div>
 
                 <div class="links">
+                    @if(Auth::user() && Auth::user()->isAdmin())
+                        <a href="{{ route('admin.dashboard') }}">{{ __('Admin Dashboard') }}</a>
+                    @endif
                     <a href="{{ route('search') }}">Search Movies</a>
                     <a href="{{ route('reviews.list') }}">Review List</a>
                     <a href="{{ route('reviews.user') }}">My Reviews</a>

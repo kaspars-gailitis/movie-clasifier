@@ -33,8 +33,8 @@ Route::post('/review/store', 'ReviewController@store')->middleware('auth');
 Route::post('/evaluate', 'EvaluationController@evaluate')->middleware('auth');
 
 Route::get('/admin', 'AdminController@index')->middleware('auth', 'admin')->name('admin.dashboard');
-Route::get('/admin/reviews/{pageNumber?}', 'ReviewController@showList')->middleware('auth', 'admin')->name('admin.reviews');
-Route::get('/admin/users', 'AdminController@index')->middleware('auth', 'admin')->name('admin.users');
+Route::post('/admin/reviews/update', 'AdminController@updateReviewReting')->middleware('auth', 'admin')->name('admin.reviews');
+Route::get('/admin/users', 'AdminController@listUsers')->middleware('auth', 'admin')->name('admin.users');
 Route::get('/admin/algorithm', 'AdminController@algorithPerformance')->middleware('auth', 'admin')->name('admin.algorithm');
 
 Route::get('/reviews/my/list', 'ReviewController@listMyReviews')->middleware('auth')->name('reviews.user');

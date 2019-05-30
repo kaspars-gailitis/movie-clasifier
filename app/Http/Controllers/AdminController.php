@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use App\Review;
+use App\User;
 use App\MovieReviewHistory;
 use App\Http\Controllers\ReviewController;
 use App\UserAlgorithmPerformanceRating;
@@ -39,7 +40,10 @@ class AdminController extends Controller
     }
 
     public function listUsers() {
-        
+        $users = User::orderBy('updated_at', 'DESC')->get();
+        return view('admin.users', [
+            'users' => $users
+        ]);
     }
 
     public function algorithPerformance() { //includes relearning option

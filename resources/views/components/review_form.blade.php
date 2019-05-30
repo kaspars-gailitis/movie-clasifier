@@ -11,7 +11,7 @@
         @endforeach
         </ul>
     </div>
-    @endif
+@endif
 {!! Form::open(array('url' => '/review/store', 'method' => 'post')) !!}
 {{ csrf_field() }}
 @if($review_from == 'new')
